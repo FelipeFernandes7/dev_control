@@ -26,6 +26,15 @@ export function HeaderDashboard() {
         Clientes
         <ChevronRight size={20} color="#fff" />
       </Link>
+      {pathname === "/dashboard/customer/create" && (
+        <Link
+          className={`text-white text-sm hover:tracking-wide transition-all duration-300 flex items-center font-bold`}
+          href={"/dashboard/customer/create"}
+        >
+          Cadastrar Novo Cliente
+          <ChevronRight size={20} color="#fff" />
+        </Link>
+      )}
     </header>
   );
 }
