@@ -29,3 +29,19 @@ export async function createCustomer({
 
   return response.data;
 }
+
+export async function deleteCustomer(id: string) {
+  const response = await api.delete("/api/customer", {
+    params: {
+      id,
+    },
+  });
+  try {
+    toast.success(response.data.message);
+  } catch (error) {
+    console.error(error);
+    toast.error(response.data.message);
+  }
+
+  return response.data;
+}
