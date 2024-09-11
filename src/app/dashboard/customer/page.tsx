@@ -1,8 +1,11 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Card } from "./components/card";
+
+import empty from "@/assets/undraw/empty.svg";
+import Link from "next/link";
+import Image from "next/image";
 import prismaClient from "@/lib/prisma";
 
 export default async function Customer() {
@@ -30,15 +33,22 @@ export default async function Customer() {
       </div>
       <section className="w-full flex items-center justify-center md:justify-normal flex-wrap gap-4 px-2 mt-5">
         {customers &&
-          customers.map((res) => (
-            <Card
-              key={res.id}
-              name={res.name}
-              email={res.email}
-              phone={res.phone}
-            />
-          ))}
+          customers.map((res) => <Card key={res.id} customer={res} />)}
       </section>
+      {customers.length === 0 && (
+        <div className="w-full flex flex-col items-center justify-center mt-6 px-2">
+          <h2 className="text-2xl font-medium mb-2">Oops...</h2>
+          <h1 className="font-medium text-3xl text-center mb-8 text-gray-400 md:text-4xl">
+            parece que ainda não há clientes cadastrados
+          </h1>
+          <Image
+            className="max-w-sm md:max-w-xl"
+            src={empty}
+            alt="Imagem de um cliente"
+            width={600}
+          />
+        </div>
+      )}
     </main>
   );
 }
