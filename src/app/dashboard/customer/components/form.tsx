@@ -31,6 +31,7 @@ export function CustomerForm() {
   async function onSubmit(formValues: FormValues) {
     await createCustomer(formValues);
 
+    router.refresh();
     router.replace("/dashboard/customer");
   }
 
