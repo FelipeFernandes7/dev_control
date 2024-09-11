@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { HTMLProps } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
@@ -24,9 +25,10 @@ export function Input({
         </label>
       )}
       <section
-        className={`w-full h-14 md:h-11 mt-1 ${
-          error ? "border-2 border-red-500" : "border border-neutral-800"
-        } flex rounded-xl items-center px-4 bg-transparent justify-between`}
+        className={cn(
+          "w-full h-14 md:h-11 mt-1 flex rounded-xl items-center px-4 bg-transparent justify-between",
+          error ? "border-2 border-red-500" : "border border-neutral-800",
+        )}
       >
         {register && name ? (
           <input
