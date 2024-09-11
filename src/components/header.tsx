@@ -1,11 +1,14 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Loader, LogOut, User } from "lucide-react";
+import { Loader, LogOut } from "lucide-react";
 
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export function Header() {
+  const pathname = usePathname();
   const { status } = useSession();
 
   async function handleLogin() {
@@ -42,11 +45,21 @@ export function Header() {
 
         {status === "authenticated" && (
           <div className="flex items-baseline gap-4">
-            <Link href={"/dashboard"}>
-              <User size={26} color="#ffffff" />
+            <Link
+              className={cn(
+                "flex transition-all duration-300 hover:bg-neutral-800 px-4 h-10 items-center justify-center rounded-xl",
+                pathname === "/dashboard" ? "bg-neutral-800" : "bg-transparent",
+              )}
+              href={"/dashboard"}
+            >
+              Dashboard
             </Link>
-            <button onClick={handleLogOut}>
-              <LogOut size={26} color="#ffffff" />
+            <button
+              className="transition-all duration-300 hover:bg-neutral-800 h-10 text-indigo-500 flex items-center justify-center gap-2 bg-transparent px-3 rounded-xl"
+              onClick={handleLogOut}
+            >
+              sair
+              <LogOut size={18} color="#6C63FF" />
             </button>
           </div>
         )}
