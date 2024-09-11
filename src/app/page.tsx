@@ -12,7 +12,7 @@ export default function Home() {
         className="max-w-sm md:max-w-xl"
         src={attendant}
         alt="Imagem de um cliente"
-        width={600}
+        width={300}
       />
     </main>
   );

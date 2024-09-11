@@ -45,7 +45,7 @@ export default async function Customer() {
             className="max-w-sm md:max-w-xl"
             src={empty}
             alt="Imagem de um cliente"
-            width={600}
+            width={300}
           />
         </div>
       )}
