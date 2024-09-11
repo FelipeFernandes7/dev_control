@@ -26,12 +26,21 @@ export function HeaderDashboard() {
         Clientes
         <ChevronRight size={20} color="#fff" />
       </Link>
+      {pathname === "/dashboard/create" && (
+        <Link
+          className={`text-white text-sm hover:tracking-wide transition-all duration-300 flex items-center font-bold`}
+          href={"/dashboard/create"}
+        >
+          Abrir novo chamado
+          <ChevronRight size={20} color="#fff" />
+        </Link>
+      )}
       {pathname === "/dashboard/customer/create" && (
         <Link
           className={`text-white text-sm hover:tracking-wide transition-all duration-300 flex items-center font-bold`}
           href={"/dashboard/customer/create"}
         >
-          Cadastrar Novo Cliente
+          Cadastrar novo cliente
           <ChevronRight size={20} color="#fff" />
         </Link>
       )}
