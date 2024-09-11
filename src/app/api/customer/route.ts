@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import prismaClient from "@/lib/prisma";
 
 export async function POST(req: Request) {
-  const { name, email, phone, address, userId } = await req.json();
+  const { name, email, phone, address } = await req.json();
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
         email,
         phone,
         address,
-        userId,
+        userId: session.user.id,
       },
     });
     return NextResponse.json({ message: "Cliente cadastrado com sucesso!" });
