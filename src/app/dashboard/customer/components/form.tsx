@@ -1,7 +1,9 @@
 "use client";
 
 import { Input } from "@/components/Input";
+import { createCustomer } from "@/services/customer";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,8 +26,12 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 export function CustomerForm() {
-  function onSubmit(formValues: FormValues) {
-    console.log(formValues);
+  const router = useRouter();
+
+  async function onSubmit(formValues: FormValues) {
+    await createCustomer(formValues);
+
+    router.replace("/dashboard/customer");
   }
 
   const {
