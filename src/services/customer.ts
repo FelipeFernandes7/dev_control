@@ -8,6 +8,16 @@ type Customer = {
   address?: string;
 };
 
+export async function searchCustomer(email: string) {
+  const response = await api.get("/api/customer", {
+    params: {
+      email,
+    },
+  });
+
+  return response;
+}
+
 export async function createCustomer({
   name,
   email,
