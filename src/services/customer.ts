@@ -24,7 +24,7 @@ export async function createCustomer({
     toast.success(response.data.message);
   } catch (error) {
     console.error(error);
-    toast.error(response.data.message);
+    toast.error(response.data.error);
   }
 
   return response.data;
@@ -40,7 +40,7 @@ export async function deleteCustomer(id: string) {
     toast.success(response.data.message);
   } catch (error) {
     console.error(error);
-    toast.error(response.data.message);
+    toast.error(response.data.error);
   }
 
   return response.data;
