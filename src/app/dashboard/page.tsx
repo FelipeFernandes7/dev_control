@@ -1,8 +1,11 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Ticket } from "./components/ticket";
+import peace from "@/assets/undraw/peace.svg";
+import Link from "next/link";
+import Image from "next/image";
+import prismaClient from "@/lib/prisma";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
@@ -10,6 +13,19 @@ export default async function Dashboard() {
   if (!session || !session.user) {
     redirect("/");
   }
+
+  const tickets = await prismaClient.ticket.findMany({
+    where: {
+      userId: session.user.id,
+      status: "aberto",
+    },
+    include: {
+      customer: true,
+    },
+    orderBy: {
+      created_at: "desc",
+    },
+  });
 
   return (
     <main className="w-full flex flex-col mt-9 mb-2">
@@ -33,11 +49,29 @@ export default async function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            <Ticket />
-            <Ticket />
-            <Ticket />
+            {tickets.map((ticket) => (
+              <Ticket
+                key={ticket.id}
+                ticket={ticket}
+                customer={ticket.customer}
+              />
+            ))}
           </tbody>
         </table>
+        {tickets.length === 0 && (
+          <div className="w-full flex flex-col items-center justify-center mt-6">
+            <h2 className="text-2xl font-medium">Nenhum ticket aberto</h2>
+            <h1 className="font-bold text-3xl mb-8 text-indigo-500 md:text-4xl">
+              foi encontrado!
+            </h1>
+            <Image
+              className="max-w-sm md:max-w-xl"
+              src={peace}
+              alt="Imagem de um cliente"
+              width={300}
+            />
+          </div>
+        )}
       </div>
     </main>
   );
