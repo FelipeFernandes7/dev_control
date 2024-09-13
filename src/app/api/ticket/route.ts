@@ -53,3 +53,39 @@ export async function PATCH(req: Request) {
     );
   }
 }
+
+export async function POST(req: Request) {
+  const { customerId, name, description } = await req.json();
+
+  if (!name || !description || !customerId) {
+    return NextResponse.json(
+      { error: "Precisamos de mais informações para criar o ticket" },
+      {
+        status: 400,
+      },
+    );
+  }
+  try {
+    await prismaClient.ticket.create({
+      data: {
+        name,
+        customerId,
+        description,
+        status: "aberto",
+      },
+    });
+    return NextResponse.json(
+      { message: "Chamado criado com sucesso!" },
+      {
+        status: 201,
+      },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Falha ao Abrir chamado" },
+      {
+        status: 400,
+      },
+    );
+  }
+}
