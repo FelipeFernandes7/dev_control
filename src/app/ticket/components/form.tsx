@@ -1,8 +1,11 @@
 import { Input } from "@/components/Input";
+import { createTicket } from "@/services/ticket";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { CustomerData } from "../page";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   name: z.string().min(1, "O nome do chamado é obrigatório"),
@@ -10,7 +13,12 @@ const schema = z.object({
 });
 type FormValues = z.infer<typeof schema>;
 
-export function FormTicket() {
+type FormTicketProps = {
+  customer: CustomerData;
+};
+
+export function FormTicket({ customer }: FormTicketProps) {
+  const router = useRouter();
   const {
     handleSubmit,
     setValue,
@@ -19,8 +27,18 @@ export function FormTicket() {
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
+
+  async function onSubmit(formValues: FormValues) {
+    await createTicket(formValues.name, formValues.description, customer.id);
+    setValue("name", "");
+    setValue("description", "");
+    router.refresh();
+  }
   return (
-    <form className="w-full flex flex-col md:max-w-2xl mx-auto gap-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full flex flex-col md:max-w-2xl mx-auto gap-4"
+    >
       <Input
         label="nome do chamado"
         name="name"
