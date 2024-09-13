@@ -52,7 +52,10 @@ export default async function NewTicket() {
           Voltar
         </Link>
       </div>
-      <form action={onSubmit} className="w-full flex flex-col mt-6 px-2 gap-4">
+      <form
+        action={onSubmit}
+        className="w-full flex flex-col mt-6 px-2 gap-4 max-w-2xl mx-auto"
+      >
         <div className="w-full flex flex-col">
           <label className="font-medium text-white text-sm">
             Descreva o problema
