@@ -14,3 +14,22 @@ export async function changeStatus(id: string) {
 
   return response.data;
 }
+
+export async function createTicket(
+  name: string,
+  description: string,
+  customerId: string,
+) {
+  const response = await api.post("api/ticket/", {
+    name,
+    description,
+    customerId,
+  });
+  try {
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    toast.error(response.data.error);
+  }
+}
