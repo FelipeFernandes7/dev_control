@@ -6,6 +6,7 @@ import peace from "@/assets/undraw/peace.svg";
 import Link from "next/link";
 import Image from "next/image";
 import prismaClient from "@/lib/prisma";
+import { ButtonRefresh } from "./components/refresh";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
@@ -16,7 +17,9 @@ export default async function Dashboard() {
 
   const tickets = await prismaClient.ticket.findMany({
     where: {
-      userId: session.user.id,
+      customer: {
+        userId: session.user.id,
+      },
       status: "aberto",
     },
     include: {
@@ -31,12 +34,15 @@ export default async function Dashboard() {
     <main className="w-full flex flex-col mt-9 mb-2">
       <div className="w-full flex items-center justify-between px-4">
         <h1 className="font-bold text-white text-3xl">Chamados</h1>
-        <Link
-          className=" hover:bg-indigo-600 font-bold transition-all duration-300 h-10 px-4 bg-indigo-500 flex items-center justify-center rounded-xl text-sm"
-          href={"/dashboard/create"}
-        >
-          Abrir chamado
-        </Link>
+        <div className="flex items-center gap-2">
+          <ButtonRefresh />
+          <Link
+            className=" hover:bg-indigo-600 font-bold transition-all duration-300 h-10 px-4 bg-indigo-500 flex items-center justify-center rounded-xl text-sm"
+            href={"/dashboard/create"}
+          >
+            Abrir chamado
+          </Link>
+        </div>
       </div>
       <div className="w-full flex flex-col items-center px-2 my-5">
         <table className="min-w-full">
